@@ -1,0 +1,51 @@
+{
+  "name": "@gregjohnso/pi-imgview",
+  "publishConfig": { "access": "public" },
+  "version": "0.1.0",
+  "description": "Display images from inside the pi coding agent: imgcat-style inline rendering in supported terminals, and one-click open in the system browser.",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "pi-mono",
+    "image",
+    "imgcat",
+    "iterm2",
+    "kitty",
+    "browser",
+    "agent",
+    "llm"
+  ],
+  "license": "MIT",
+  "author": "Gregory Johnson",
+  "homepage": "https://github.com/gregjohnso/pi-imgview#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregjohnso/pi-imgview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gregjohnso/pi-imgview/issues"
+  },
+  "files": [
+    "extensions",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": ["./extensions/imgview"]
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-tui": "*",
+    "typebox": "*"
+  },
+  "scripts": {
+    "test": "tsx --test extensions/imgview/utils.test.ts"
+  },
+  "devDependencies": {
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-tui": "*",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0",
+    "typebox": "*"
+  }
+}
