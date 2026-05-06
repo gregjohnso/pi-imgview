@@ -138,29 +138,15 @@ export default function imgviewExtension(pi: ExtensionAPI): void {
 				resolved = await resolveImage(input.source, ctx.cwd, signal);
 			} catch (err: unknown) {
 				const msg = err instanceof Error ? err.message : String(err);
-				return {
-					content: [{ type: "text", text: `show_image failed: ${msg}` }],
-					details: { source: input.source, mode, error: msg },
-					isError: true,
-				};
+				// AgentToolResult dropped `isError`; throw so the agent runtime
+				// surfaces the failure to the model as a real error.
+				throw new Error(`show_image failed: ${msg}`);
 			}
 
 			if (!isSupportedImageMime(resolved.mimeType)) {
-				return {
-					content: [
-						{
-							type: "text",
-							text: `Refusing to show ${resolved.sourceLabel}: detected MIME ${resolved.mimeType} is not a supported image type.`,
-						},
-					],
-					details: {
-						source: input.source,
-						resolved: resolved.sourceLabel,
-						mimeType: resolved.mimeType,
-						mode,
-					},
-					isError: true,
-				};
+				throw new Error(
+					`Refusing to show ${resolved.sourceLabel}: detected MIME ${resolved.mimeType} is not a supported image type.`,
+				);
 			}
 
 			const bytes = resolved.bytes.length;
