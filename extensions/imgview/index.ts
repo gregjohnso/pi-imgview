@@ -65,7 +65,7 @@ const SHOW_IMAGE_PARAMS = Type.Object({
 	mode: Type.Optional(
 		StringEnum(MODES, {
 			description:
-				"How to display the image. 'terminal' renders inline in supported terminals (iTerm2, Kitty, WezTerm, Ghostty). 'browser' opens it in the user's default browser. 'both' does both. Default: 'terminal'.",
+				"How to display the image. 'terminal' (default, strongly preferred) renders inline in supported terminals (iTerm2, Kitty, WezTerm, Ghostty) and is non-disruptive. 'browser' opens an external browser window — only use when the user explicitly asks for a browser view, or when they need to zoom into a large image. 'both' does both and should likewise be reserved for explicit user requests.",
 		} as { description: string }),
 	),
 	caption: Type.Optional(
@@ -119,7 +119,8 @@ export default function imgviewExtension(pi: ExtensionAPI): void {
 		promptSnippet:
 			"show_image — display an image to the user inline in the terminal and/or in the browser",
 		promptGuidelines: [
-			"Use show_image when the user asks to view, see, or display an image, screenshot, plot, or diagram. Prefer mode='terminal' for quick previews and mode='browser' (or 'both') for high-resolution images, large files, or anything the user will want to zoom into.",
+			"Use show_image when the user asks to view, see, or display an image, screenshot, plot, or diagram.",
+			"Default to mode='terminal'. Do NOT use mode='browser' or mode='both' unless the user explicitly asks to open the image in a browser (or asks to zoom into a large/high-resolution image where inline rendering would be too small to be useful). Browser mode launches an external window and is disruptive — never pick it on your own initiative.",
 			"Pass `source` as the literal path or URL the user gave you; do not paraphrase. For local files, ~ and relative paths are fine.",
 			"Add a short `caption` when the image's relevance isn't obvious from context (e.g. 'PR diff screenshot' or 'matplotlib output').",
 		],

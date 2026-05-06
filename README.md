@@ -45,8 +45,13 @@ ln -s /absolute/path/to/pi-imgview/extensions/imgview ~/.pi/agent/extensions/img
 | Param     | Type   | Default     | Meaning                                                                                        |
 | --------- | ------ | ----------- | ---------------------------------------------------------------------------------------------- |
 | `source`  | string | —           | Local path (absolute, relative-to-cwd, or `~/...`), `http(s)://` URL, or `data:` URI.          |
-| `mode`    | enum   | `terminal`  | `terminal` \| `browser` \| `both`.                                                             |
+| `mode`    | enum   | `terminal`  | `terminal` \| `browser` \| `both`. **Inline terminal is the strong default.** Browser modes only fire when the user explicitly asks. |
 | `caption` | string | —           | Optional one-line note shown alongside the image.                                              |
+
+The tool's prompt guidelines instruct the LLM to never pick `browser` or
+`both` on its own initiative — launching an external browser window is
+disruptive. Use the `/imgshow` slash command, or pass `mode: "browser"`
+explicitly, when you do want it.
 
 Returned content:
 
